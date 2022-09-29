@@ -3,9 +3,7 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable class-methods-use-this */
 class Rudderanalytics {
-  // eslint-disable-next-line no-useless-constructor
-
-  init(writeKey, dataplaneUrl, config) {
+  constructor() {
     (function () {
       const e = (window.rudderanalytics = window.rudderanalytics || []);
       (e.methods = [
@@ -44,9 +42,12 @@ class Rudderanalytics {
         const a = document.getElementsByTagName('script')[0];
         a.parentNode.insertBefore(r, a);
       }),
-        e.loadJS(),
-        e.load(writeKey, dataplaneUrl, config);
+        e.loadJS();
     })();
+  }
+
+  init(writeKey, dataplaneUrl, config) {
+    window.rudderanalytics.load(writeKey, dataplaneUrl, config);
   }
 
   isLoaded() {
@@ -62,7 +63,7 @@ class Rudderanalytics {
   }
 
   track(...args) {
-    window.rudderanalytics.identify(...args);
+    window.rudderanalytics.track(...args);
   }
 }
 

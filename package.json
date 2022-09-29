@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/rudderlabs/rudder-snowplow-plugin#readme",
   "dependencies": {
+    "get-value": "^3.0.1",
     "rudder-sdk-js": "^2.15.0"
   },
   "devDependencies": {

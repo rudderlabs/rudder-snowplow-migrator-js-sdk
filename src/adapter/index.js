@@ -1,8 +1,11 @@
-// import * as rudderanalytics from 'rudder-sdk-js';
+import get from 'get-value';
 import Rudderanalytics from '../rs-js-sdk';
+import Logger from '../utils/logger';
 
+const logger = new Logger('RS-Snowplow-Adapter');
 class RudderSnowplowAdapter {
   constructor() {
+    logger.setLogLevel('WARN');
     this.rs = new Rudderanalytics();
   }
 
@@ -29,26 +32,43 @@ class RudderSnowplowAdapter {
       }
       case 'trackPageView': {
         let name;
-        const [obj, properties, context, callback] = [...args];
+        const [obj, properties] = [...args];
         if (obj && Object.prototype.hasOwnProperty.call(obj, 'title')) {
           name = obj.title;
         }
-        this.rs.page(undefined, name, properties, context, callback);
+        this.rs.page(undefined, name, properties);
         break;
       }
       case 'setUserId': {
         const [userId, traits] = [...args];
+        console.log('userId', userId);
+        console.log('traits', traits);
         this.rs.identify(userId, traits);
         break;
       }
       case 'trackStructEvent': {
-        const [properties, context, callback] = [...args];
+        const [properties] = [...args];
         const { action } = properties;
-        this.rs.track(action, properties, context, callback);
+        if (!action) {
+          logger.error('[RS Adapter]:: "action" is required');
+          return;
+        }
+        this.rs.track(action, properties);
+        break;
+      }
+      case 'trackSelfDescribingEvent': {
+        const [eventObj] = [...args];
+        const data = get(eventObj, 'event.data');
+        const action = get(eventObj, 'event.data.action');
+        if (!action) {
+          logger.error('[RS Adapter]:: "action" is required');
+          return;
+        }
+        this.rs.track(action, data);
         break;
       }
       default:
-        console.log('Invalid event');
+        logger.error('Invalid event');
     }
   }
 }

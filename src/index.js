@@ -9,7 +9,18 @@ if (isValidArgsArray) {
    */
   let i = 0;
   while (i < argumentsArray.length) {
-    Adapter.processEvents(...argumentsArray[i]);
+    const event = argumentsArray.shift();
+    Adapter.processEvents(...event);
     i += 1;
   }
+  setInterval(() => {
+    if (window.rsSpAdapter.q.length) {
+      let j = 0;
+      while (j < window.rsSpAdapter.q.length) {
+        const event = window.rsSpAdapter.q.shift();
+        Adapter.processEvents(...event);
+        j += 1;
+      }
+    }
+  }, 50);
 }
