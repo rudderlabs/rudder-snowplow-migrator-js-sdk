@@ -41,8 +41,6 @@ class RudderSnowplowAdapter {
       }
       case 'setUserId': {
         const [userId, traits] = [...args];
-        console.log('userId', userId);
-        console.log('traits', traits);
         this.rs.identify(userId, traits);
         break;
       }
