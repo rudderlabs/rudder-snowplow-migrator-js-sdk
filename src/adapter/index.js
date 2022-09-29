@@ -10,7 +10,12 @@ class RudderSnowplowAdapter {
     switch (method) {
       case 'newTracker': {
         const [writeKey, dataplaneUrl, optionalConfig] = [...args];
-        this.rs.init(writeKey, dataplaneUrl, optionalConfig);
+        const { cookieDomain, cookieSameSite, cookieSecure } = { ...optionalConfig };
+        const loadOptions = {};
+        if (typeof cookieDomain === 'string') loadOptions.setCookieDomain = cookieDomain;
+        if (typeof cookieSameSite === 'string') loadOptions.sameSiteCookie = cookieSameSite;
+        if (typeof cookieSecure === 'boolean') loadOptions.secureCookie = cookieSecure;
+        this.rs.init(writeKey, dataplaneUrl, loadOptions);
         const self = this;
         const interval = setInterval(() => {
           if (self.rs.isLoaded()) {
@@ -32,8 +37,8 @@ class RudderSnowplowAdapter {
         break;
       }
       case 'setUserId': {
-        const [userId, traits, context, callback] = [...args];
-        this.rs.identify(userId, traits, context, callback);
+        const [userId, traits] = [...args];
+        this.rs.identify(userId, traits);
         break;
       }
       case 'trackStructEvent': {
