@@ -14,10 +14,11 @@ if (isValidArgsArray) {
     i += 1;
   }
   setInterval(() => {
-    if (window.rsSpAdapter.q.length) {
+    const queue = window.rsSpAdapter.q;
+    if (queue.length) {
       let j = 0;
-      while (j < window.rsSpAdapter.q.length) {
-        const event = window.rsSpAdapter.q.shift();
+      while (j < queue.length) {
+        const event = queue.shift();
         Adapter.processEvents(...event);
         j += 1;
       }

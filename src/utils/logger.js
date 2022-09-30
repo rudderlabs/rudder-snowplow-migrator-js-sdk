@@ -73,7 +73,7 @@ class Logger {
   getLogData(logArgs) {
     if (Array.isArray(logArgs) && logArgs.length > 0) {
       // prefix SDK identifier
-      let msg = `%c RS SDK`;
+      let msg = `%c RS SP ADAPTER`;
 
       // format the log message using `scope`
       if (this.scope) {
