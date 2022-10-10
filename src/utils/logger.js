@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 const LogLevel = {
   LOG: {
     value: 0,
@@ -24,11 +26,11 @@ const LogLevel = {
 class Logger {
   constructor(scope, level) {
     this.level = +level || LogLevel.ERROR.value;
-    this.scope = scope || "";
+    this.scope = scope || '';
   }
 
   setLogLevel(levelStr) {
-    if (levelStr && typeof levelStr === "string") {
+    if (levelStr && typeof levelStr === 'string') {
       const lvlStr = levelStr.toUpperCase();
       this.level = LogLevel[lvlStr] ? LogLevel[lvlStr].value : this.level;
     }
@@ -103,4 +105,4 @@ class Logger {
   }
 }
 
-export default Logger;
+export { Logger };

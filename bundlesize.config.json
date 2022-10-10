@@ -1,0 +1,8 @@
+{
+  "files": [
+    {
+      "path": "./dist/rudder-snowplow-adapter.min.js",
+      "maxSize": "4 KB"
+    }
+  ]
+}
