@@ -9,6 +9,17 @@ module.exports = {
   modulePathIgnorePatterns: ['<rootDir>/dist'],
   coveragePathIgnorePatterns: ['/node_modules/', '/dist/', '/scripts/', '__tests__', '__mocks__'],
   coverageReporters: ['json', 'text', 'lcov', 'clover'],
+  reporters: [
+    'default',
+    [
+      'jest-sonar',
+      {
+        outputDirectory: 'reports/sonar',
+        outputName: 'results-report.xml',
+        reportedFilePath: 'absolute',
+      },
+    ],
+  ],
   coverageThreshold: {
     global: {
       branches: 50,
