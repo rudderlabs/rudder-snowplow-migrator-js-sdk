@@ -15,6 +15,10 @@ class RudderSnowplowAdapter {
       case 'newTracker': {
         try {
           const [writeKey, dataplaneUrl, optionalConfig] = [...args];
+          if (!writeKey || !dataplaneUrl) {
+            logger.error(`[Adapter]:[newTracker]:: Write key or Dataplane URL is missing.`);
+            return;
+          }
           const { cookieDomain, cookieSameSite, cookieSecure } = { ...optionalConfig };
           const loadOptions = {};
           if (typeof cookieDomain === 'string') loadOptions.setCookieDomain = cookieDomain;

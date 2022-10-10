@@ -5,11 +5,7 @@ const distName = 'rudder-sp-adapter';
 
 const outFilePath = getOutputFilePath(outDir, distName);
 
-const outputFiles = getOutputConfiguration(
-  `${outDir}/rudder-snowplow-adapter`,
-  'rudderstackSpAdapter',
-  outFilePath,
-);
+const outputFiles = getOutputConfiguration(`${outDir}/rudder-snowplow-adapter`, 'rs', outFilePath);
 
 export default {
   ...getDefaultConfig(distName),

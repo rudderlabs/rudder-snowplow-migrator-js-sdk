@@ -63,7 +63,7 @@ export function getOutputConfiguration(outDir, modName, outFilePath) {
     outputFiles.push({
       file: outFilePath,
       format: 'iife',
-      // name: modName,
+      name: modName,
       sourcemap: process.env.PROD_DEBUG_INLINE === 'true' ? 'inline' : !!process.env.PROD_DEBUG,
     });
   }
