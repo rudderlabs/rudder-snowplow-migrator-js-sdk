@@ -101,7 +101,7 @@ rs.snowplowAdapter(
   {
     event: {
         data: {
-            action: "order completed"
+            action: "order completed",
             category: "FCW",
             product_id: "P1100DFG9766",
             revenue: 30,
@@ -125,7 +125,7 @@ A sample `trackStructEvent` call is shown below:
 rs.snowplowAdapter(
   "trackStructEvent",
   {
-    action: "order completed"
+    action: "order completed",
     category: "FCW",
     label: 'Sample label',
     property: 'Some property',
