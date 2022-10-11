@@ -27,3 +27,5 @@ jobs:
           npm run check:lint
           npm run check:circular
           npm run check:size
+          npm run check:duplicates
+          npm run check:security
