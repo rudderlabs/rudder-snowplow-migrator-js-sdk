@@ -2,7 +2,8 @@
 
 const https = require('https');
 const fs = require('fs');
-const { CDN_URL } = require('../src/RudderAnalyticsClient/mountRudderAnalytics');
+
+const CDN_URL = 'https://cdn.rudderlabs.com/v1.1/rudder-analytics.min.js';
 
 const download = (filename, url) => {
   console.log('Downloading SDK...');

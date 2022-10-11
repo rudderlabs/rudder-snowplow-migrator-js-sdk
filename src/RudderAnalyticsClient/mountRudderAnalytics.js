@@ -48,4 +48,4 @@ const mountRudderAnalytics = () => {
   })();
 };
 
-export { mountRudderAnalytics, CDN_URL };
+export { mountRudderAnalytics };

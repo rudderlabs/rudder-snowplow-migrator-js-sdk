@@ -41,7 +41,7 @@ module.exports = {
   testPathIgnorePatterns: ['/node_modules/', '/dist/'],
   testRunner: 'jest-circus/runner',
   transform: {
-    '^.+\\.(js|)?$': 'esbuild-jest',
+    '^.+\\.js?$': 'esbuild-jest',
   },
   transformIgnorePatterns: ['<rootDir>/.github/', '<rootDir>/.husky/', '<rootDir>/dist/'],
   verbose: true,
