@@ -24,5 +24,6 @@ jobs:
         run: |
           cd ./.github/actions/check-pr-title
           npm ci
+
       - name: Check PR title
         uses: ./.github/actions/check-pr-title

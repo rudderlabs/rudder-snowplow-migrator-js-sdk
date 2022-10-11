@@ -24,6 +24,6 @@ jobs:
           HUSKY: 0
         run: |
           npm ci
-          npm run lint
+          npm run check:lint
           npm run check:circular
-          npm run size
+          npm run check:size

@@ -8,41 +8,21 @@ import { terser } from 'rollup-plugin-terser';
 import builtins from 'rollup-plugin-node-builtins';
 import globals from 'rollup-plugin-node-globals';
 import json from '@rollup/plugin-json';
-import gzipPlugin from 'rollup-plugin-gzip';
-import brotli from 'rollup-plugin-brotli';
 import visualizer from 'rollup-plugin-visualizer';
 import filesize from 'rollup-plugin-filesize';
 import copy from 'rollup-plugin-copy';
+import livereload from 'rollup-plugin-livereload';
+import serve from 'rollup-plugin-serve';
 
 export function getOutputFilePath(dirPath, distName) {
   const fileNamePrefix = `${distName}${process.env.STAGING === 'true' ? '-staging' : ''}`;
   let outFilePath = '';
 
   if (process.env.ENV === 'prod') {
-    switch (process.env.ENC) {
-      case 'gzip':
-        if (process.env.PROD_DEBUG_INLINE === 'true') {
-          outFilePath = `${dirPath}/${fileNamePrefix}-map.min.gzip.js`;
-        } else {
-          outFilePath = `${dirPath}/${fileNamePrefix}.min.gzip.js`;
-        }
-        break;
-
-      case 'br':
-        if (process.env.PROD_DEBUG_INLINE === 'true') {
-          outFilePath = `${dirPath}/${fileNamePrefix}-map.min.br.js`;
-        } else {
-          outFilePath = `${dirPath}/${fileNamePrefix}.min.br.js`;
-        }
-        break;
-
-      default:
-        if (process.env.PROD_DEBUG_INLINE === 'true') {
-          outFilePath = `${dirPath}/${fileNamePrefix}-map.min.js`;
-        } else {
-          outFilePath = `${dirPath}/${fileNamePrefix}.min.js`;
-        }
-        break;
+    if (process.env.PROD_DEBUG_INLINE === 'true') {
+      outFilePath = `${dirPath}/${fileNamePrefix}-map.min.js`;
+    } else {
+      outFilePath = `${dirPath}/${fileNamePrefix}.min.js`;
     }
   } else {
     outFilePath = `${dirPath}/${fileNamePrefix}.js`;
@@ -54,39 +34,41 @@ export function getOutputFilePath(dirPath, distName) {
 export function getOutputConfiguration(outDir, modName, outFilePath) {
   const outputFiles = [];
 
-  if (process.env.NPM === 'true') {
-    outputFiles.push({
-      file: `${outDir}/index.js`,
-      format: 'umd',
-      name: modName,
-    });
-    outputFiles.push({
-      file: `${outDir}/index.es.js`,
-      format: 'esm',
-      name: modName,
-    });
-  } else {
-    outputFiles.push({
-      file: outFilePath,
-      format: 'iife',
-      name: modName,
-      sourcemap: process.env.PROD_DEBUG === 'inline' ? 'inline' : process.env.PROD_DEBUG === 'true',
-    });
-  }
+  outputFiles.push({
+    file: outFilePath,
+    format: 'iife',
+    name: modName,
+    sourcemap: process.env.PROD_DEBUG === 'inline' ? 'inline' : process.env.PROD_DEBUG === 'true',
+  });
+
+  outputFiles.push({
+    file: `${outDir}/index.es.js`,
+    format: 'esm',
+    name: modName,
+  });
+
+  outputFiles.push({
+    file: `${outDir}/index.js`,
+    format: 'umd',
+    name: modName,
+  });
 
   return outputFiles;
 }
 
 export function getDefaultConfig(distName, outDir) {
-  const version = process.env.VERSION;
-  const moduleType = process.env.NPM === 'true' ? 'npm' : 'cdn';
+  const version = process.env.VERSION || 'dev-snapshot';
+  const moduleType = 'cdn';
 
   return {
+    watch: {
+      include: 'src/**',
+    },
     external: [],
     plugins: [
       replace({
         preventAssignment: true,
-        'process.browser': process.env.NPM !== 'true',
+        'process.browser': 'true',
         'process.prod': process.env.ENV === 'prod',
         'process.package_version': version,
         'process.module_type': moduleType,
@@ -107,17 +89,15 @@ export function getDefaultConfig(distName, outDir) {
         babelHelpers: 'bundled',
         exclude: ['node_modules/@babel/**', 'node_modules/core-js/**'],
       }),
-      process.env.uglify === 'true' &&
+      process.env.UGLIFY === 'true' &&
         terser({
           // remove all comments
           format: {
             comments: false,
           },
         }),
-      process.env.ENC === 'gzip' && gzipPlugin(),
-      process.env.ENC === 'br' && brotli(),
-      process.env.visualizer === 'true' &&
-        process.env.uglify === 'true' &&
+      process.env.VISUALIZER === 'true' &&
+        process.env.UGLIFY === 'true' &&
         visualizer({
           filename: `./reports/stats/${distName}.html`,
           title: `Rollup Visualizer - ${distName}`,
@@ -130,15 +110,26 @@ export function getDefaultConfig(distName, outDir) {
         showBeforeSizes: 'build',
         showBrotliSize: true,
       }),
-      process.env.NPM === 'true' &&
-        copy({
-          targets: [
-            { src: 'package.json', dest: outDir },
-            { src: 'README.md', dest: outDir },
-            { src: 'CHANGELOG.md', dest: outDir },
-            { src: 'LICENCE', dest: outDir },
-          ],
+      copy({
+        targets: [
+          { src: 'package.json', dest: outDir },
+          { src: 'README.md', dest: outDir },
+          { src: 'CHANGELOG.md', dest: outDir },
+          { src: 'LICENCE', dest: outDir },
+        ],
+      }),
+      process.env.DEV_SERVER &&
+        serve({
+          open: true,
+          openPage: '/snowplow-sample/index.html',
+          contentBase: ['dist', 'examples'],
+          host: 'localhost',
+          port: 3001,
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+          },
         }),
+      process.env.DEV_SERVER && livereload(),
     ],
   };
 }

@@ -33,12 +33,6 @@ const dummyWriteKey = 'dummyWriteKey';
 const dummyDataplaneHost = 'https://dummy.dataplane.host.com';
 
 const dummyInitOptions = {
-  timeout: false,
-  flushAt: 1,
-  flushInterval: 200000,
-  maxInternalQueueSize: 1,
-  logLevel: 'off',
-  enable: true,
   cookieDomain: dummyDataplaneHost,
   cookieSameSite: 'true',
   cookieSecure: true,

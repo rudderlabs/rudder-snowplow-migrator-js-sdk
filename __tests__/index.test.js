@@ -58,7 +58,6 @@ describe('JS SDK Snowplow Adapter', () => {
     expect(rudderAnalyticsInstance[0][0]).toBe('load');
     expect(rudderAnalyticsInstance[0][1]).toBe(dummyWriteKey);
     expect(rudderAnalyticsInstance[0][2]).toBe(dummyDataplaneHost);
-    // TODO: possibly a bug, should it not contain all dummyInitOptions?
     expect(rudderAnalyticsInstance[0][3]).toStrictEqual({
       setCookieDomain: dummyInitOptions.cookieDomain,
       sameSiteCookie: dummyInitOptions.cookieSameSite,
@@ -80,7 +79,7 @@ describe('JS SDK Snowplow Adapter', () => {
   });
 
   it('Should record trackPageView', async () => {
-    // TODO: seems like we mutate the nested objects these can cause bugs
+    // TODO: seems like we mutate the nested objects in properties, these can cause bugs to consumers
     snowplowAdapterClient(
       'trackPageView',
       { title: pageRequestPayload.name },
@@ -96,27 +95,25 @@ describe('JS SDK Snowplow Adapter', () => {
   it('Should record trackStructEvent', async () => {
     snowplowAdapterClient('trackStructEvent', {
       action: trackRequestPayload.event,
-      properties: trackRequestPayload.properties,
+      ...trackRequestPayload.properties,
     });
 
     await new Promise((r) => setTimeout(r, 500));
 
     expect(requestBody.event).toStrictEqual(trackRequestPayload.event);
-    // TODO: this seems like a bug. should it only have the properties of properties value inside?
     expect(requestBody.properties).toEqual(expect.objectContaining(trackRequestPayload.properties));
   });
 
   it('Should record trackSelfDescribingEvent', async () => {
     snowplowAdapterClient('trackSelfDescribingEvent', {
       event: {
-        data: { action: trackRequestPayload.event, properties: trackRequestPayload.properties },
+        data: { action: trackRequestPayload.event, ...trackRequestPayload.properties },
       },
     });
 
     await new Promise((r) => setTimeout(r, 500));
 
     expect(requestBody.event).toStrictEqual(trackRequestPayload.event);
-    // TODO: this seems like a bug. should it only have the properties of properties value inside?
     expect(requestBody.properties).toEqual(expect.objectContaining(trackRequestPayload.properties));
   });
 });
