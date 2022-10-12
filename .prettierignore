@@ -1,5 +1,7 @@
-dist/
-node_modules/
-coverage/
-tests/
-__tests__/prodsdk.js
+dist
+reports
+node_modules
+.git
+.husky
+__mocks__
+CHANGELOG.md

@@ -28,8 +28,6 @@ function type(val) {
 /**
  * To check if a variable is storing object or not
  */
-const isObject = (obj) => {
-  return type(obj) === 'object';
-};
+const isObject = (obj) => type(obj) === 'object';
 
 export { isObject };

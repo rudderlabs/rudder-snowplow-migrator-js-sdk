@@ -1,20 +1,23 @@
-**/.DS_Store
-**/bin/
-**/obj/
-**/.vs
-**/.vscode
-**/.classpath
-**/.settings/
-**/.project
-*.iml
-**/node_modules
-**/**/node_modules
-local.properties
-*.apk
-*.zip
-build.sh
-publish.sh
-dist/*
-coverage/**
-__tests__/prodsdk.js
+/node_modules
+
+# testing
+/reports
+
+# production
+/dist
 .eslintcache
+__mocks__/rudder-analytics.min.js
+
+# misc
+.DS_Store
+.env
+.idea/
+.vscode/
+
+npm-debug.log*
+
+# code analysis tools
+.scannerwork
+dependency-check-bin/
+dependency-check-reports/
+test-report.xml

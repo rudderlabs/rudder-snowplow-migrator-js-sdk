@@ -22,7 +22,6 @@
 
 This JavaScript SDK helps you migrate from Snowplow to Rudderstack and it only requires minimal change in your existing Snowplow JS tracker implementation to get started and send events to Rudderstack.
 
-
 ## [](https://github.com/rudderlabs/rudder-snowplow-migrator-js-sdk/blob/main/README.md#installing-the-javascript-sdk)Installing the JavaScript SDK
 
 To integrate the JavaScript SDK with your website, place the following code snippet in the `<head>` section of your website.
@@ -38,6 +37,7 @@ To integrate the JavaScript SDK with your website, place the following code snip
 <br>
 
 > The above snippet lets you integrate the SDK with your website.
+
 ### Write key and data plane URL
 
 To integrate and initialize the JavaScript SDK, you will need the source write key and the data plane URL.
@@ -45,22 +45,18 @@ To integrate and initialize the JavaScript SDK, you will need the source write k
 - To get the source write key, follow [**this guide**](https://www.rudderstack.com/docs/get-started/glossary/#write-key).
 - To get the data plane URL, follow [**this guide**](https://www.rudderstack.com/docs/rudderstack-cloud/dashboard-overview/#data-plane-url).
 
-## [](https://github.com/rudderlabs/rudder-snowplow-migrator-js-sdk/blob/master/README.md#setUserId)setUserId 
+## [](https://github.com/rudderlabs/rudder-snowplow-migrator-js-sdk/blob/master/README.md#setUserId)setUserId
 
 The `setUserId` call lets you identify a visiting user and associate them to their actions. It also lets you record the traits about them like their name, email address, etc.
 
 A sample `setUserId` call is shown below:
 
 ```javascript
-rs.snowplowAdapter(
-  "setUserId",
-  "john.doe@email.com",
-  {
-    firstName: "John",
-    lastName: "Doe",
-    city: "Barcelona"
-  }
-);
+rs.snowplowAdapter('setUserId', 'john.doe@email.com', {
+  firstName: 'John',
+  lastName: 'Doe',
+  city: 'Barcelona',
+});
 ```
 
 In the above example, second parameter is treated as the `userId` and third parameter contains other user-related information like `firstName`, `lastName`, etc.
@@ -73,17 +69,17 @@ A sample `trackPageView` call is shown below:
 
 ```javascript
 rs.snowplowAdapter(
-  "trackPageView",
+  'trackPageView',
   {
-    title: "Cart Viewed"
+    title: 'Cart Viewed',
   },
   {
-    path: "/best-seller/1",
-    referrer: "https://www.google.com/search?q=estore+bestseller",
-    search: "estore bestseller",
-    title: "The best sellers offered by EStore",
-    url: "https://www.estore.com/best-seller/1"
-  }
+    path: '/best-seller/1',
+    referrer: 'https://www.google.com/search?q=estore+bestseller',
+    search: 'estore bestseller',
+    title: 'The best sellers offered by EStore',
+    url: 'https://www.estore.com/best-seller/1',
+  },
 );
 ```
 
@@ -96,21 +92,18 @@ The `trackSelfDescribingEvent` call lets you capture user events along with the 
 A sample `trackSelfDescribingEvent` call is shown below:
 
 ```javascript
-rs.snowplowAdapter(
-  "trackSelfDescribingEvent",
-  {
-    event: {
-        data: {
-            action: "order completed",
-            category: "FCW",
-            product_id: "P1100DFG9766",
-            revenue: 30,
-            currency: "USD",
-            user_actual_id: 12345
-        }
-    }
-  }
-);
+rs.snowplowAdapter('trackSelfDescribingEvent', {
+  event: {
+    data: {
+      action: 'order completed',
+      category: 'FCW',
+      product_id: 'P1100DFG9766',
+      revenue: 30,
+      currency: 'USD',
+      user_actual_id: 12345,
+    },
+  },
+});
 ```
 
 In the above example, the `trackSelfDescribingEvent` method tracks the Order Completed event along with other information like revenue, currency, and the user_actual_id, etc. Only action field is mandatory.
@@ -122,18 +115,13 @@ The `trackStructEvent` call lets you capture user events along with the associat
 A sample `trackStructEvent` call is shown below:
 
 ```javascript
-rs.snowplowAdapter(
-  "trackStructEvent",
-  {
-    action: "order completed",
-    category: "FCW",
-    label: 'Sample label',
-    property: 'Some property',
-    value: 40.0
-  }
-);
+rs.snowplowAdapter('trackStructEvent', {
+  action: 'order completed',
+  category: 'FCW',
+  label: 'Sample label',
+  property: 'Some property',
+  value: 40.0,
+});
 ```
 
 In the above example, the `trackStructEvent` method tracks the Order Completed event along with other information like label, property, value. Only action field is mandatory.
-
-

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8' />
+  <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+  <title>Dummy Title</title>
+
+  <script type='text/javascript' async>
+    rs = window.rs = [];
+    rs['snowplowAdapter'] = (function() {
+      return function() {
+        rs.push(Array.prototype.slice.call(arguments));
+      };
+    })();
+    rs.snowplowAdapter('newTracker', '24BYkp94ywe4JVFVU6KfmhMPC36', 'https://hosted.rudderlabs.com', {});
+    rs.snowplowAdapter('setUserId', '123456', { name: 'Name Username', email: 'name@website.com' });
+    rs.snowplowAdapter('trackPageView', { title: 'snowplow page view' });
+  </script>
+  <script src='./../rudder-snowplow-adapter.js'></script>
+</head>
+
+<body>
+  <h1>
+    Sample HTML File
+  </h1>
+  <button onclick="(function(){ rs.snowplowAdapter('trackStructEvent', { action: 'Item Viewed', dummyProperty: 'Test value' }); return false; })();return false;">
+    Test trackSelfDescribingEvent
+  </button>
+  <br><br>
+  <button onclick="(function(){ rs.snowplowAdapter('trackSelfDescribingEvent', {event: {data: { action: 'Item Viewed', dummyProperty: 'Test value' }}}); return false; })();return false;">
+    Test trackSelfDescribingEvent
+  </button>
+</body>
+</html>

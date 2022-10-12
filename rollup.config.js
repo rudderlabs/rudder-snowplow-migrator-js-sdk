@@ -1,14 +1,18 @@
-import { getOutputConfiguration, getOutputFilePath, getDefaultConfig } from './rollupUtils';
+import {
+  getOutputConfiguration,
+  getOutputFilePath,
+  getDefaultConfig,
+} from './rollup-configs/utilities';
 
 const outDir = 'dist';
-const distName = 'rudder-sp-adapter';
+const distName = 'rudder-snowplow-adapter';
 
 const outFilePath = getOutputFilePath(outDir, distName);
 
 const outputFiles = getOutputConfiguration(`${outDir}/rudder-snowplow-adapter`, 'rs', outFilePath);
 
 export default {
-  ...getDefaultConfig(distName),
+  ...getDefaultConfig(distName, `${outDir}/rudder-snowplow-adapter`),
   input: 'src/index.js',
   output: outputFiles,
 };
