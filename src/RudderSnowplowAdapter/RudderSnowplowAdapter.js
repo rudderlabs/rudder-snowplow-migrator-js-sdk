@@ -24,8 +24,8 @@ class RudderSnowplowAdapter {
         return;
       }
 
-      const { cookieDomain, cookieSameSite, cookieSecure } = { ...optionalConfig };
-      const loadOptions = {};
+      const { cookieDomain, cookieSameSite, cookieSecure, ...otherOptions } = { ...optionalConfig };
+      const loadOptions = { ...otherOptions };
 
       if (typeof cookieDomain === 'string') loadOptions.setCookieDomain = cookieDomain;
       if (typeof cookieSameSite === 'string') loadOptions.sameSiteCookie = cookieSameSite;
