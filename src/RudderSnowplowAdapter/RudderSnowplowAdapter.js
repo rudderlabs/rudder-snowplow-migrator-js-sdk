@@ -31,7 +31,6 @@ class RudderSnowplowAdapter {
       if (typeof cookieSameSite === 'string') loadOptions.sameSiteCookie = cookieSameSite;
       if (typeof cookieSecure === 'boolean') loadOptions.secureCookie = cookieSecure;
 
-      // TODO: also allow any extra RudderStack specific option key/value pairs here
       this.rs.init(writeKey, dataplaneUrl, loadOptions);
     } catch (e) {
       this.logger.error(`[Adapter]:[newTracker]:: ${e.message}`);
