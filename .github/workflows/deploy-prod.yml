@@ -40,4 +40,4 @@ jobs:
           npm ci
           npm run build
           aws s3 sync ./dist s3://${{ secrets.AWS_PROD_S3_BUCKET_NAME }} --acl public-read --cache-control max-age=3600
-          aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/rudder-snowplow-adapter.min.js" "/rudder-snowplow-adapter.min.js.map"
+          aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/rs-sp-analytics.min.js" "/rs-sp-analytics.min.js.map"
