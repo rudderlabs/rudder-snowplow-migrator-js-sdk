@@ -5,7 +5,7 @@
 module.exports = [
   {
     name: 'Snowplow Adapter - CDN',
-    path: 'dist/rudder-snowplow-adapter.min.js',
+    path: 'dist/rs-sp-analytics.min.js',
     gzip: true,
     limit: '4 kB',
   },
