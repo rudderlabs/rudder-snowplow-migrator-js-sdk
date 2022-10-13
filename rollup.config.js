@@ -5,7 +5,7 @@ import {
 } from './rollup-configs/utilities';
 
 const outDir = 'dist';
-const distName = 'rudder-snowplow-adapter';
+const distName = 'rs-sp-analytics';
 
 const outFilePath = getOutputFilePath(outDir, distName);
 
