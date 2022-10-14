@@ -39,5 +39,5 @@ jobs:
         run: |
           npm ci
           npm run build
-          aws s3 cp ./dist s3://${{ secrets.AWS_PROD_S3_BUCKET_NAME }} --acl public-read --cache-control max-age=3600
-          aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/rs-sp-analytics.min.js" "/rs-sp-analytics.min.js.map"
+          aws s3 cp ./dist s3://${{ secrets.AWS_PROD_S3_BUCKET_NAME }}/adapter/snowplow/v1 --acl public-read --cache-control max-age=3600
+          aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "adapter/snowplow/v1/rs-sp-analytics.min.js" "adapter/snowplow/v1/rs-sp-analytics.min.js.map"
