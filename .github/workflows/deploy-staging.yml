@@ -1,0 +1,38 @@
+name: Deploy to STAGING
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write # allows the JWT to be requested from GitHub's OIDC provider
+  contents: read  # This is required for actions/checkout
+
+jobs:
+  deploy-tag:
+    name: Deploy to STAGING
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v') || startsWith(github.ref, 'refs/heads/develop') || startsWith(github.ref, 'refs/heads/hotfix/')
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_STAGING_ACCOUNT_ID }}:role/${{ secrets.AWS_STAGING_S3_SYNC_ROLE }}
+          aws-region: us-east-1
+
+      - name: Checkout source branch
+        uses: actions/checkout@v2
+
+      - name: Set Node 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
+
+      - name: Build and sync files to S3
+        env:
+          HUSKY: 0
+        run: |
+          npm ci
+          npm run build:staging
+          aws s3 cp ./dist s3://${{ secrets.AWS_STAGING_S3_BUCKET_NAME }} --acl public-read --cache-control max-age=3600
+          aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/rs-sp-analytics-staging.min.js" "/rs-sp-analytics-staging.min.js.map"

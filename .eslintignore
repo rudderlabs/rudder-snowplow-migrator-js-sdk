@@ -1,0 +1,6 @@
+dist/
+reports/
+.husky/
+__mocks__/
+*.json
+*.md

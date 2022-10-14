@@ -1,0 +1,23 @@
+/node_modules
+
+# testing
+/reports
+
+# production
+/dist
+.eslintcache
+__mocks__/rudder-analytics.min.js
+
+# misc
+.DS_Store
+.env
+.idea/
+.vscode/
+
+npm-debug.log*
+
+# code analysis tools
+.scannerwork
+dependency-check-bin/
+dependency-check-reports/
+test-report.xml

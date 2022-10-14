@@ -1,0 +1,7 @@
+dist
+reports
+node_modules
+.git
+.husky
+__mocks__
+CHANGELOG.md
