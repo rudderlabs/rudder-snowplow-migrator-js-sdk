@@ -13,11 +13,11 @@
         rs.push(Array.prototype.slice.call(arguments));
       };
     })();
-    rs.snowplowAdapter('newTracker', '24BYkp94ywe4JVFVU6KfmhMPC36', 'https://hosted.rudderlabs.com', {});
+    rs.snowplowAdapter('newTracker', '__WRITE_KEY__', '__DATAPLANE_URL__', {});
     rs.snowplowAdapter('setUserId', '123456', { name: 'Name Username', email: 'name@website.com' });
     rs.snowplowAdapter('trackPageView', { title: 'snowplow page view' });
   </script>
-  <script src='./../rs-sp-analytics.js'></script>
+<!--  <script src='./../rs-sp-analytics.js'></script>-->
 </head>
 
 <body>
