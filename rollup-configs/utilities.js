@@ -13,6 +13,8 @@ import filesize from 'rollup-plugin-filesize';
 import copy from 'rollup-plugin-copy';
 import livereload from 'rollup-plugin-livereload';
 import serve from 'rollup-plugin-serve';
+import htmlTemplate from 'rollup-plugin-generate-html-template';
+import * as dotenv from 'dotenv';
 
 export function getOutputFilePath(dirPath, distName) {
   const fileNamePrefix = `${distName}${process.env.STAGING === 'true' ? '-staging' : ''}`;
@@ -59,6 +61,7 @@ export function getOutputConfiguration(outDir, modName, outFilePath) {
 export function getDefaultConfig(distName, outDir) {
   const version = process.env.VERSION || 'dev-snapshot';
   const moduleType = 'cdn';
+  dotenv.config();
 
   return {
     watch: {
@@ -119,10 +122,20 @@ export function getDefaultConfig(distName, outDir) {
         ],
       }),
       process.env.DEV_SERVER &&
+        htmlTemplate({
+          template: 'examples/snowplow-sample/index.html',
+          target: 'index.html',
+          attrs: ['async', 'defer'],
+          replaceVars: {
+            __WORKSPACE_ID__: process.env.WORKSPACE_ID,
+            __DATAPLANE_URL__: process.env.DATAPLANE_URL,
+          },
+        }),
+      process.env.DEV_SERVER &&
         serve({
           open: true,
-          openPage: '/snowplow-sample/index.html',
-          contentBase: ['dist', 'examples'],
+          openPage: '/index.html',
+          contentBase: ['dist'],
           host: 'localhost',
           port: 3001,
           headers: {
