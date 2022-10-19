@@ -1,6 +1,6 @@
 {
   "name": "rudder-snowplow-migrator-js-sdk",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Adapter to help snowplow migration to RudderStack",
   "main": "index.js",
   "module": "index.es.js",
