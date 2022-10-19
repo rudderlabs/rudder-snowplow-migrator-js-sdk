@@ -127,7 +127,7 @@ export function getDefaultConfig(distName, outDir) {
           target: 'index.html',
           attrs: ['async', 'defer'],
           replaceVars: {
-            __WORKSPACE_ID__: process.env.WORKSPACE_ID,
+            __WRITE_KEY__: process.env.WRITE_KEY,
             __DATAPLANE_URL__: process.env.DATAPLANE_URL,
           },
         }),
