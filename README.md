@@ -31,7 +31,7 @@ To integrate the JavaScript SDK with your website, place the following code snip
   rs=window.rs=[],rs.snoplowAdapter=function(){rs.push(Array.prototype.slice.call(arguments))},rs.snoplowAdapter("newTracker",<WRITE_KEY>,<DATA_PLANE_URL>);
 </script>
 
-<script src="https://cdn.rudderlabs.com/adapters/v1/rs-sp-adapter.min.js"></script>
+<script src="https://cdn.rudderlabs.com/adapter/sp/beta/v1/rs-sp-analytics.min.js"></script>
 ```
 
 <br>
