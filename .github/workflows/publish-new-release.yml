@@ -41,7 +41,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CONVENTIONAL_GITHUB_RELEASER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          npm run release:github
+          npx conventional-github-releaser -p angular
 
       - name: Create pull request into develop
         uses: repo-sync/pull-request@v2

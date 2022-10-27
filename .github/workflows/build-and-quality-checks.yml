@@ -26,25 +26,17 @@ jobs:
           npm ci
 
       - name: Execute quality checks
-        env:
-          HUSKY: 0
         run: |
-          npm ci
           npm run check:lint
           npm run check:circular
           npm run check:duplicates
 
       - name: Execute security checks
-        env:
-          HUSKY: 0
         run: |
           npm run check:security
 
       - name: Execute build
-        env:
-          HUSKY: 0
         run: |
-          npm ci
           npm run build
 
       - name: Execute bundle size checks
