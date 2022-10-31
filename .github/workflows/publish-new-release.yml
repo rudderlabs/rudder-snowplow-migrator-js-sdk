@@ -20,8 +20,8 @@ jobs:
           BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
           VERSION=${BRANCH_NAME#hotfix-}
           VERSION=${VERSION#release/}
-
-          echo "::set-output name=release_version::$VERSION"
+          
+          echo "release_version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Checkout
         uses: actions/checkout@v3
