@@ -1,5 +1,0 @@
-{
-  "scripts": {
-    "prerelease": "npx replace $CURRENT_VERSION_VALUE $NEW_VERSION_VALUE README.md && git add README.md"
-  }
-}
