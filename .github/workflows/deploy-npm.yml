@@ -1,4 +1,4 @@
-name: Deploy to PROD
+name: Deploy to NPM
 
 on:
   workflow_dispatch:
@@ -14,16 +14,10 @@ permissions:
 
 jobs:
   deploy-tag:
-    name: Deploy to PROD
+    name: Deploy to NPM
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/v') || startsWith(github.ref, 'refs/heads/main') || github.event.pull_request.merged == true
     steps:
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          role-to-assume: arn:aws:iam::${{ secrets.AWS_PROD_ACCOUNT_ID }}:role/${{ secrets.AWS_PROD_S3_SYNC_ROLE }}
-          aws-region: us-east-1
-
       - name: Checkout source branch
         uses: actions/checkout@v3
 
@@ -33,11 +27,12 @@ jobs:
           node-version-file: '.nvmrc'
           cache: 'npm'
 
-      - name: Build and sync files to S3
+      - name: Build & Publish package to NPM
         env:
           HUSKY: 0
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           npm ci
           npm run build
-          aws s3 cp dist/ s3://${{ secrets.AWS_PROD_S3_BUCKET_NAME }}/adapters/sp/beta/v1 --recursive --acl public-read --cache-control max-age=3600
-          aws cloudfront create-invalidation --distribution-id $AWS_PROD_CF_DISTRIBUTION_ID --paths "adapters/sp/beta/v1/rs-sp-analytics.min.js" "adapters/sp/beta/v1/rs-sp-analytics.min.js.map"
+          cd dist/rudder-snowplow-adapter
+          npm publish
