@@ -10,20 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source branch
-        uses: actions/checkout@v2
-
-      - name: Set Node 16
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          cache: 'npm'
-
-      - name: Install action dependencies
-        env:
-          HUSKY: 0
-        run: |
-          cd ./.github/actions/check-pr-title
-          npm ci
+        uses: actions/checkout@v3
 
       - name: Check PR title
-        uses: ./.github/actions/check-pr-title
+        uses: rudderlabs/github-action-check-pr-title@v1.0.7

@@ -34,6 +34,7 @@ To integrate the JavaScript SDK with your website, place the following code snip
 <script src="https://cdn.rudderlabs.com/adapters/v1/rs-sp-adapter.min.js"></script>
 ```
 
+Current version: 0.0.2
 <br>
 
 > The above snippet lets you integrate the SDK with your website.

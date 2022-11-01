@@ -20,18 +20,18 @@ jobs:
           BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
           VERSION=${BRANCH_NAME#hotfix-}
           VERSION=${VERSION#release/}
-
-          echo "::set-output name=release_version::$VERSION"
+          
+          echo "release_version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
       - name: Set Node 16
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version-file: '.nvmrc'
           cache: 'npm'
 
       - name: Create Github Release
@@ -41,14 +41,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CONVENTIONAL_GITHUB_RELEASER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          npm run release:github
+          npx conventional-github-releaser -p angular
 
       - name: Create pull request into develop
         uses: repo-sync/pull-request@v2
         with:
           source_branch: 'main'
           destination_branch: 'develop'
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.PAT }}
           pr_title: "chore(release): pulling main into develop post release v${{ steps.extract-version.outputs.release_version }}"
           pr_body: ':crown: *An automated PR*'
           pr_reviewer: 'gbardis'

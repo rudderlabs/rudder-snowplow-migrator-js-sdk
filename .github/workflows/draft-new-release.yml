@@ -10,14 +10,14 @@ jobs:
     if: startsWith(github.ref, 'refs/heads/develop') || startsWith(github.ref, 'refs/heads/hotfix/')
     steps:
       - name: Checkout source branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
       - name: Set Node 16
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version-file: '.nvmrc'
           cache: 'npm'
 
       # In order to make a commit, we need to initialize a user.
@@ -40,7 +40,7 @@ jobs:
           git merge origin/main
           current_version=$(jq -r .version package.json)
           
-          npm run release -- --skip.commit --skip.tag --skip.changelog
+          npx standard-version --skip.commit --skip.tag --skip.changelog
           new_version=$(jq -r .version package.json)
           git reset --hard
 
@@ -54,19 +54,26 @@ jobs:
           git checkout -b "$branch_name"
           git push --set-upstream origin "$branch_name"
           
-          echo "::set-output name=source_branch_name::$source_branch_name"
-          echo "::set-output name=branch_name::$branch_name"
-          echo "::set-output name=new_version::$new_version"
+          echo "source_branch_name=$source_branch_name" >> $GITHUB_OUTPUT
+          echo "branch_name=$branch_name" >> $GITHUB_OUTPUT
+          echo "new_version=$new_version" >> $GITHUB_OUTPUT
+          echo "CURRENT_VERSION_VALUE=$current_version" >> $GITHUB_ENV
+          echo "NEW_VERSION_VALUE=$new_version" >> $GITHUB_ENV
 
       - name: Update changelog & bump version
+        id: finish-release
         env:
           HUSKY: 0
         run: |
           npm i -g conventional-changelog-cli
           SUMMARY=$(((npx conventional-changelog -u) 2>&1) | sed "s/*/<br> */g" | sed "s/#/ /g" | tr -d '\n' || true)
           echo $SUMMARY
-          echo "::set-output name=commit_summary::$SUMMARY"
-          npm run release
+          echo "commit_summary=$SUMMARY" >> $GITHUB_OUTPUT
+          echo "Current version: $CURRENT_VERSION_VALUE"
+          echo "New version: $NEW_VERSION_VALUE"
+          npx replace $CURRENT_VERSION_VALUE $NEW_VERSION_VALUE README.md
+          git add README.md
+          npx standard-version -a
 
       - name: Push new version in release branch & tag
         run: |
@@ -77,7 +84,7 @@ jobs:
         with:
           source_branch: ${{ steps.create-release.outputs.branch_name }}
           destination_branch: 'main'
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.PAT }}
           pr_title: "chore(release): pulling ${{ steps.create-release.outputs.branch_name }} into main"
           pr_body: ":crown: *An automated PR*\n\n${{ steps.finish-release.outputs.commit_summary }}"
           pr_reviewer: 'gbardis'
