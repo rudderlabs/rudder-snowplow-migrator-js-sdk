@@ -1,12 +1,8 @@
 name: Deploy to NPM
 
 on:
-  workflow_dispatch:
-  pull_request:
-    branches:
-      - main
-    types:
-      - closed
+  release:
+    types: [created]
 
 permissions:
   id-token: write # allows the JWT to be requested from GitHub's OIDC provider
@@ -16,7 +12,6 @@ jobs:
   deploy-tag:
     name: Deploy to NPM
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/v') || startsWith(github.ref, 'refs/heads/main') || github.event.pull_request.merged == true
     steps:
       - name: Checkout source branch
         uses: actions/checkout@v3
