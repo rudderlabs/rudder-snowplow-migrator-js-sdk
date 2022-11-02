@@ -8,7 +8,7 @@ module.exports = {
   coverageDirectory: 'reports/coverage',
   modulePathIgnorePatterns: ['<rootDir>/dist'],
   coveragePathIgnorePatterns: ['/node_modules/', '/dist/', '/scripts/', '__tests__', '__mocks__'],
-  coverageReporters: ['json', 'text', 'lcov', 'clover'],
+  coverageReporters: ['json', 'text', ['lcov', { projectRoot: '/' }], 'clover'],
   reporters: [
     'default',
     [
