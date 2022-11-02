@@ -16,9 +16,7 @@
   </b>
 </p>
 
-[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=rudderlabs_rudder-snowplow-migrator-js-sdk&metric=alert_status)](https://sonarcloud.io/dashboard/index/rudderlabs_rudder-snowplow-migrator-js-sdk) [![Maintainability](https://sonarcloud.io/api/project_badges/measure?project=rudderlabs_rudder-snowplow-migrator-js-sdk&metric=sqale_rating)](https://sonarcloud.io/dashboard/index/rudderlabs_rudder-snowplow-migrator-js-sdk) [![Reliability](https://sonarcloud.io/api/project_badges/measure?project=rudderlabs_rudder-snowplow-migrator-js-sdk&metric=reliability_rating)](https://sonarcloud.io/dashboard/index/rudderlabs_rudder-snowplow-migrator-js-sdk) [![Security](https://sonarcloud.io/api/project_badges/measure?project=rudderlabs_rudder-snowplow-migrator-js-sdk&metric=security_rating)](https://sonarcloud.io/dashboard/index/rudderlabs_rudder-snowplow-migrator-js-sdk) [![Releases](https://img.shields.io/github/release/rudderlabs/rudder-snowplow-migrator-js-sdk.svg)](https://github.com/rudderlabs/rudder-snowplow-migrator-js-sdk/releases)
-
----
+## [![Releases](https://img.shields.io/github/release/rudderlabs/rudder-snowplow-migrator-js-sdk.svg)](https://github.com/rudderlabs/rudder-snowplow-migrator-js-sdk/releases) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=rudderlabs_rudder-snowplow-migrator-js-sdk&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=rudderlabs_rudder-snowplow-migrator-js-sdk) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=rudderlabs_rudder-snowplow-migrator-js-sdk&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=rudderlabs_rudder-snowplow-migrator-js-sdk) [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=rudderlabs_rudder-snowplow-migrator-js-sdk&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=rudderlabs_rudder-snowplow-migrator-js-sdk) [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=rudderlabs_rudder-snowplow-migrator-js-sdk&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=rudderlabs_rudder-snowplow-migrator-js-sdk) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=rudderlabs_rudder-snowplow-migrator-js-sdk&metric=coverage)](https://sonarcloud.io/summary/new_code?id=rudderlabs_rudder-snowplow-migrator-js-sdk)
 
 # [](https://github.com/rudderlabs/rudder-snowplow-migrator-js-sdk/blob/main/README.md)Rudderstack Snowplow Migrator SDK(JavaScript)
 
@@ -30,10 +28,10 @@ To integrate the JavaScript SDK with your website, place the following code snip
 
 ```html
 <script>
-  rs=window.rs=[],rs.snoplowAdapter=function(){rs.push(Array.prototype.slice.call(arguments))},rs.snoplowAdapter("newTracker",<WRITE_KEY>,<DATA_PLANE_URL>);
+  rs=window.rs=[],rs.snowplowAdapter=function(){rs.push(Array.prototype.slice.call(arguments))},rs.snowplowAdapter("newTracker",<WRITE_KEY>,<DATA_PLANE_URL>);
 </script>
 
-<script src="https://cdn.rudderlabs.com/adapters/v1/rs-sp-adapter.min.js"></script>
+<script src="https://cdn.rudderlabs.com/adapters/sp/beta/v1/rs-sp-analytics.min.js"></script>
 ```
 
 Current version: 0.0.2
