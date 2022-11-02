@@ -15,7 +15,7 @@
     "build:debug": "rollup -c --environment VERSION:$npm_package_version,UGLIFY,PROD_DEBUG:inline,ENV:prod,",
     "build:bundle-size": "rollup -c --environment VERSION:$npm_package_version,UGLIFY,PROD_DEBUG,VISUALIZER,ENV:prod",
     "clean": "rm -rf dist",
-    "check:lint": "eslint \"src/**\"",
+    "check:lint": "eslint \"src/**\" -f json -o reports/eslint.json",
     "check:size": "npm run build && size-limit",
     "check:circular": "madge --circular --extensions js ./src || exit 0",
     "check:support": "NODE_ENV=production npx browserslist",
