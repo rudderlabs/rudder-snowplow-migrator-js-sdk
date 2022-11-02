@@ -16,7 +16,8 @@ module.exports = {
       {
         outputDirectory: 'reports/sonar',
         outputName: 'results-report.xml',
-        reportedFilePath: 'absolute',
+        reportedFilePath: 'relative',
+        relativeRootDir: './',
       },
     ],
   ],
