@@ -1,5 +1,7 @@
 name: 'Unit Tests, Coverage & Sonar'
+
 on:
+  workflow_dispatch:
   pull_request:
     branches: ['main', 'develop']
     types: ['opened', 'reopened', 'synchronize']
