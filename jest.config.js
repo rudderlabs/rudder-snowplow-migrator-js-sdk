@@ -23,10 +23,10 @@ module.exports = {
   ],
   coverageThreshold: {
     global: {
-      branches: 60,
-      functions: 60,
-      lines: 60,
-      statements: 60,
+      branches: 45,
+      functions: 50,
+      lines: 50,
+      statements: 50,
     },
   },
   globalSetup: './jest/jest.global-setup',
@@ -41,9 +41,6 @@ module.exports = {
   testMatch: ['**/__tests__/**/*test.[jt]s?(x)', '**/?(*.)+(spec|test).[tj]s?(x)'],
   testPathIgnorePatterns: ['/node_modules/', '/dist/'],
   testRunner: 'jest-circus/runner',
-  transform: {
-    '^.+\\.js?$': 'esbuild-jest',
-  },
   transformIgnorePatterns: ['<rootDir>/.github/', '<rootDir>/.husky/', '<rootDir>/dist/'],
   verbose: true,
 };
