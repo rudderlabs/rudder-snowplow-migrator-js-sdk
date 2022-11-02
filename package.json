@@ -132,8 +132,5 @@
       "skipScope": false,
       "defaultType": "feat"
     }
-  },
-  "standard-version": {
-    "skip": {}
   }
 }
