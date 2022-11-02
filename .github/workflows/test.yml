@@ -28,6 +28,7 @@ jobs:
           npm ci
           npm run test:ci
           npm run check:lint
+          sed -i 's+/home/runner/work/***+/github/workspace+g' reports/eslint.json
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
