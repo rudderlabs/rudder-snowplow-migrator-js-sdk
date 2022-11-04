@@ -40,4 +40,4 @@ jobs:
           npm ci
           npm run build:dev
           aws s3 cp dist/ s3://${{ secrets.AWS_DEV_S3_BUCKET_NAME }}/adapters/sp/beta/v1/dev --recursive --cache-control max-age=3600
-          aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DEV_CF_DISTRIBUTION_ID }} --paths "adapters/sp/beta/v1/dev/rs-sp-analytics.min.js" "adapters/sp/beta/v1/dev/rs-sp-analytics.min.js.map"
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DEV_CF_DISTRIBUTION_ID }} --paths "adapters/sp/beta/v1/dev/rs-sp-analytics.min.js"
