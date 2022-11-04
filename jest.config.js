@@ -8,7 +8,7 @@ module.exports = {
   coverageDirectory: 'reports/coverage',
   modulePathIgnorePatterns: ['<rootDir>/dist'],
   coveragePathIgnorePatterns: ['/node_modules/', '/dist/', '/scripts/', '__tests__', '__mocks__'],
-  coverageReporters: ['json', 'text', 'lcov', 'clover'],
+  coverageReporters: ['json', 'text', ['lcov', { projectRoot: '/' }]],
   reporters: [
     'default',
     [
@@ -16,13 +16,14 @@ module.exports = {
       {
         outputDirectory: 'reports/sonar',
         outputName: 'results-report.xml',
-        reportedFilePath: 'absolute',
+        reportedFilePath: 'relative',
+        relativeRootDir: './',
       },
     ],
   ],
   coverageThreshold: {
     global: {
-      branches: 60,
+      branches: 45,
       functions: 60,
       lines: 60,
       statements: 60,
@@ -41,7 +42,7 @@ module.exports = {
   testPathIgnorePatterns: ['/node_modules/', '/dist/'],
   testRunner: 'jest-circus/runner',
   transform: {
-    '^.+\\.js?$': 'esbuild-jest',
+    '^.+\\.js?$': ['esbuild-jest', { sourcemap: true }],
   },
   transformIgnorePatterns: ['<rootDir>/.github/', '<rootDir>/.husky/', '<rootDir>/dist/'],
   verbose: true,

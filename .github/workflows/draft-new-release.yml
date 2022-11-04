@@ -1,7 +1,7 @@
 name: Draft new release
 
 on:
-  workflow_dispatch
+  workflow_dispatch:
 
 jobs:
   draft-new-release:
@@ -14,7 +14,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set Node 16
+      - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
@@ -72,7 +72,9 @@ jobs:
           echo "Current version: $CURRENT_VERSION_VALUE"
           echo "New version: $NEW_VERSION_VALUE"
           npx replace $CURRENT_VERSION_VALUE $NEW_VERSION_VALUE README.md
+          npx replace $CURRENT_VERSION_VALUE $NEW_VERSION_VALUE sonar-project.properties
           git add README.md
+          git add sonar-project.properties
           npx standard-version -a
 
       - name: Push new version in release branch & tag
