@@ -14,6 +14,7 @@ jobs:
         uses: slackapi/slack-github-action@v1.23.0
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          PROJECT_NAME: 'JS SDK Snowplow Migrator'
         with:
           channel-id: 'C03N2GK8QR2'
           payload: |
@@ -23,7 +24,7 @@ jobs:
                   "type": "header",
                   "text": {
                     "type": "plain_text",
-                    "text": "New release: ${{ github.event.repository.full_name }}"
+                    "text": "New release: ${{ env.PROJECT_NAME }}"
                   }
                 },
                 {
