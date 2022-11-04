@@ -9,19 +9,10 @@ jobs:
     name: Notify Slack
     runs-on: ubuntu-latest
     steps:
-      - name: Dump env
-        run: env | sort
-
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
-
       - name: Send message to Slack channel
         id: slack
         uses: slackapi/slack-github-action@v1.23.0
         env:
-          PROJECT_NAME: Rudderstack Snowplow Migrator SDK(JavaScript)
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         with:
           channel-id: 'C03N2GK8QR2'
@@ -32,8 +23,7 @@ jobs:
                   "type": "header",
                   "text": {
                     "type": "plain_text",
-                    "text": "*New release: ${{ env.PROJECT_NAME }}*",
-                    "emoji": true
+                    "text": "New release: ${{ github.event.repository.full_name }}"
                   }
                 },
                 {
@@ -43,12 +33,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "*<${{ github.event.release.html_url }}|Release ${{ github.event.release.tag_name }}>*\n${{ github.event.release.created_at }}"
-                  },
-                  "accessory": {
-                    "type": "image",
-                    "image_url": "https://api.slack.com/img/blocks/bkb_template_images/notifications.png",
-                    "alt_text": "calendar thumbnail"
+                    "text": "*Release: <${{ github.event.release.html_url }}|${{ github.event.release.tag_name }}>*\n${{ github.event.release.created_at }}"
                   }
                 },
                 {
@@ -58,14 +43,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "*Changelog*"
-                  }
-                },
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "${{ github.event.release.body }}"
+                    "text": "*Changelog*\n\n${{ github.event.release.body }}"
                   }
                 }
               ]
