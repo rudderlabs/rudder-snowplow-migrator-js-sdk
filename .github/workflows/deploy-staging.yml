@@ -35,4 +35,4 @@ jobs:
           npm ci
           npm run build:staging
           aws s3 cp dist/ s3://${{ secrets.AWS_STAGING_S3_BUCKET_NAME }}/adapters/sp/beta/v1 --recursive --cache-control max-age=3600
-          aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_STAGING_CF_DISTRIBUTION_ID }} --paths "adapters/sp/beta/v1/rs-sp-analytics-staging.min.js" "adapters/sp/beta/v1/rs-sp-analytics-staging.min.js.map"
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_STAGING_CF_DISTRIBUTION_ID }} --paths "/adapters/sp/beta/v1/rs-sp-analytics-staging.min.js" "/adapters/sp/beta/v1/rs-sp-analytics-staging.min.js.map"
