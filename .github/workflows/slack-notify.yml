@@ -23,8 +23,8 @@ jobs:
         env:
           PROJECT_NAME: Rudderstack Snowplow Migrator SDK(JavaScript)
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-        channel-id: 'C03N2GK8QR2'
         with:
+          channel-id: 'C03N2GK8QR2'
           payload: |
             {
               "blocks": [
